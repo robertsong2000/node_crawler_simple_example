@@ -1,0 +1,49 @@
+import Crawler from 'crawler';
+
+const c = new Crawler({
+    maxConnections: 5,
+    rateLimit: 1000,
+    callback: (error, res, done) => {
+        if (error) {
+            console.error(`Error crawling ${res.options.uri}:`, error);
+        } else {
+            const $ = res.$;
+            const title = $('title').text();
+            const url = res.options.uri;
+            
+            console.log(`\n=== ${url} ===`);
+            console.log(`Title: ${title}`);
+            console.log(`Status: ${res.statusCode}`);
+            
+            const paragraphs = $('p').length;
+            const images = $('img').length;
+            const links = $('a').length;
+            
+            console.log(`Paragraphs: ${paragraphs}`);
+            console.log(`Images: ${images}`);
+            console.log(`Links: ${links}`);
+            
+            const firstParagraph = $('p').first().text().trim();
+            if (firstParagraph) {
+                console.log(`First paragraph: ${firstParagraph.substring(0, 100)}...`);
+            }
+        }
+        done();
+    }
+});
+
+const urls = [
+    'http://example.com',
+    'https://httpbin.org/html',
+    'https://jsonplaceholder.typicode.com/posts/1',
+    'https://httpbin.org/json'
+];
+
+console.log('Starting to crawl multiple URLs...');
+urls.forEach(url => {
+    c.queue(url);
+});
+
+c.on('drain', () => {
+    console.log('\nAll crawling completed!');
+});
