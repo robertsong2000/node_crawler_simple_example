@@ -143,3 +143,100 @@ const c = new Crawler({
 2. 遵守网站的使用条款
 3. 不要过于频繁的请求以避免被封禁
 4. 考虑添加适当的延迟和错误处理
+
+## 关于 node-crawler
+
+[node-crawler](https://github.com/bda-research/node-crawler) 是一个功能强大的 Node.js 网页爬虫库，基于 Cheerio 和 request 模块构建。
+
+### 主要特点
+
+- **简单易用**: 提供简洁的 API 接口
+- **jQuery 语法**: 使用 Cheerio 进行 DOM 解析，支持 jQuery 语法
+- **并发控制**: 内置连接池和并发限制
+- **速率限制**: 支持请求频率控制
+- **错误处理**: 完善的错误处理和重试机制
+- **代理支持**: 支持 HTTP/HTTPS 代理
+- **编码处理**: 自动处理字符编码
+
+### 核心概念
+
+#### Crawler 实例
+```javascript
+const Crawler = require('crawler');
+const c = new Crawler(options);
+```
+
+#### 队列管理
+```javascript
+c.queue(url);           // 添加单个URL
+c.queue([url1, url2]); // 添加多个URL
+c.queue({              // 添加带参数的请求
+    uri: url,
+    callback: function(error, res, done) {
+        // 处理响应
+        done();
+    }
+});
+```
+
+#### 回调函数
+```javascript
+callback: function(error, res, done) {
+    if (error) {
+        console.error(error);
+    } else {
+        // res.$ 包含 Cheerio 实例
+        const $ = res.$;
+        const title = $('title').text();
+    }
+    done(); // 必须调用 done()
+}
+```
+
+### 事件监听
+
+```javascript
+c.on('request', function(options) {
+    console.log('请求开始:', options.uri);
+});
+
+c.on('drain', function() {
+    console.log('所有请求完成');
+});
+```
+
+### 高级功能
+
+#### 动态代理
+```javascript
+const c = new Crawler({
+    rotateUA: true,
+    userAgent: [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'
+    ]
+});
+```
+
+#### 自定义请求选项
+```javascript
+c.queue({
+    uri: url,
+    method: 'POST',
+    form: { key: 'value' },
+    headers: {
+        'Authorization': 'Bearer token'
+    }
+});
+```
+
+#### 直接处理 HTML
+```javascript
+c.queue({
+    html: '<html><body><h1>Test</h1></body></html>',
+    callback: function(error, res, done) {
+        // 直接处理 HTML 字符串
+        done();
+    }
+});
+```
