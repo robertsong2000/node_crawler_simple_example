@@ -6,7 +6,7 @@ const c = new Crawler({
     jQuery: false,
     callback: (error, res, done) => {
         if (error) {
-            console.error('Error:', error);
+            console.error(`Error crawling ${res.options.url}:`, error);
             done();
             return;
         }
@@ -15,7 +15,7 @@ const c = new Crawler({
             const dom = new JSDOM(res.body);
             const document = dom.window.document;
             
-            console.log(`\n=== ${res.options.uri} ===`);
+            console.log(`\n=== ${res.options.url} ===`);
             console.log(`Status: ${res.statusCode}`);
             
             const title = document.querySelector('title')?.textContent || 'No title';
