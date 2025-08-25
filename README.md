@@ -99,6 +99,22 @@ node interactive-crawler.js
   - 全部信息
 - 更友好的用户界面
 
+### 7. save-crawler.js
+将爬取的网页保存到本地文件的爬虫工具。
+
+运行：
+```bash
+node save-crawler.js <URL>
+# 示例
+node save-crawler.js https://example.com
+```
+
+功能：
+- 将完整的HTML内容保存到 generated/ 目录
+- 自动创建文件名（域名_路径_时间戳.html）
+- 同时提取和显示页面基本信息
+- 保存的文件会被 .gitignore 忽略，不会提交到版本控制
+
 ## 主要特性
 
 - **并发控制**: 限制同时进行的请求数量
