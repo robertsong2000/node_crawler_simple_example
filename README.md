@@ -115,6 +115,40 @@ node save-crawler.js https://example.com
 - 同时提取和显示页面基本信息
 - 保存的文件会被 .gitignore 忽略，不会提交到版本控制
 
+### 8. html-to-markdown.js
+将爬取的网页转换为 Markdown 格式。
+
+运行：
+```bash
+node html-to-markdown.js <URL>
+# 示例
+node html-to-markdown.js https://example.com
+```
+
+功能：
+- 使用 TurndownService 将 HTML 转换为 Markdown
+- 自动提取页面标题和元数据
+- 移除不必要的元素（脚本、样式、导航等）
+- 保存为 .md 文件到 generated/ 目录
+- 保持良好的 Markdown 格式
+
+### 9. html-to-json.js
+将爬取的网页转换为结构化的 JSON 格式。
+
+运行：
+```bash
+node html-to-json.js <URL>
+# 示例
+node html-to-json.js https://example.com
+```
+
+功能：
+- 提取页面的所有结构化信息
+- 包含元数据、标题、链接、图片、段落、列表、表格等
+- 生成详细的统计信息
+- 保存为 .json 文件到 generated/ 目录
+- 便于后续的数据处理和分析
+
 ## 主要特性
 
 - **并发控制**: 限制同时进行的请求数量
