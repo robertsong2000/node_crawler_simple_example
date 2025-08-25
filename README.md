@@ -63,6 +63,42 @@ node robust-crawler.js
 - 速率限制避免被封禁
 - 详细的错误日志
 
+### 5. crawl-cli.js
+简单的命令行爬取工具，可以通过命令行参数指定URL。
+
+运行：
+```bash
+node crawl-cli.js <URL>
+# 示例
+node crawl-cli.js https://example.com
+```
+
+功能：
+- 通过命令行参数指定URL
+- 提取页面的基本信息统计
+- 显示标题、链接、图片等信息
+- 适合快速查看网页内容
+
+### 6. interactive-crawler.js
+交互式爬取工具，用户可以选择要提取的信息类型。
+
+运行：
+```bash
+node interactive-crawler.js
+```
+
+功能：
+- 交互式输入URL
+- 可选择爬取内容类型：
+  - 页面标题
+  - 所有标题
+  - 所有链接
+  - 所有图片
+  - 段落文本
+  - 元数据信息
+  - 全部信息
+- 更友好的用户界面
+
 ## 主要特性
 
 - **并发控制**: 限制同时进行的请求数量
